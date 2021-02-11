@@ -1,0 +1,171 @@
+Table users as U {
+  user_id int [pk, increment] // auto-increment
+  email varchar(255) [not null, unique]
+  password varchar(50) [not null]
+  name varchar(255) [not null]
+  dob date [not null]    // date of birth
+  gender varchar(1) [not null, default: 'm']
+  country varchar(50) [not null]
+  postal_code varchar(15) [not null]
+}
+
+Table videos as V {
+  video_id int [pk, increment]
+  titol varchar(255) [not null] 
+  description varchar(255) [not null]
+  size int [not null]
+  name varchar(255) [not null]
+  video_length float [not null]
+  thumbnail blob [not null]
+  views int [not null, default: 0]
+  likes int [not null, default: 0]
+  dislikes int [not null, default: 0]
+  status video_state [not null, default: 'private']
+  created_at timestamp [not null, default: `now()`]
+  user_id int [not null]
+}
+
+Enum video_state {
+  public
+  hidden
+  private
+}
+
+Table tagged_as {
+  video_id int
+  tag_id int
+  Indexes {
+    (tag_id, video_id) [pk]
+  }
+}
+
+Table tags as T {
+  tag_id int [pk, increment]
+  name varchar(255) [not null]
+}
+
+Table channels as Ch {
+  channel_id int [pk, increment]
+  name varchar(255) [not null]
+  description varchar(255) [not null]
+  created_at timestamp [not null, default: `now()`]
+  user_id int [not null]
+}
+
+Table playlists as P {
+  playlist_id int [pk, increment]
+  name varchar(255) [not null]
+  status playlist_status [not null, default: 'private']
+  created_at timestamp [not null, default: `now()`]
+  user_id int [not null]
+}
+
+Enum playlist_status {
+  public
+  private
+}
+
+Table comments as C {
+  comment_id int [pk, increment]
+  text varchar(255) [not null]
+  created_at timestamp [not null, default: `now()`]
+  user_id int [not null]
+  video_id int [not null]
+}
+
+Table comment_likes as CL{
+  comment_id int [not null]
+  user_id int [not null]
+  created_at timestamp [not null, default: `now()`]
+  like boolean [not null]
+  Indexes {
+    (user_id, comment_id) [pk]
+  }
+}
+
+Table subscribed_to {
+  channel_id int
+  user_id int
+  Indexes {
+    (user_id, channel_id) [pk]
+  }
+}
+
+Table video_likes {
+  video_id int [not null]
+  user_id int [not null]
+  created_at timestamp [not null, default: `now()`]
+  like boolean [not null]
+  Indexes {
+    (user_id, video_id) [pk]
+  }
+}
+
+Table playlist_videos as PV {
+  playlist_id int
+  video_id int
+  Indexes {
+    (playlist_id, video_id) [pk]
+  }
+}
+
+Ref {
+  U.user_id < V.user_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  V.video_id < tagged_as.video_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  T.tag_id < tagged_as.tag_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  U.user_id < C.user_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  V.video_id < C.video_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  U.user_id < CL.user_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  C.comment_id < CL.comment_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  U.user_id < Ch.user_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  U.user_id < P.user_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  U.user_id < subscribed_to.user_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  Ch.channel_id < subscribed_to.channel_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  U.user_id < video_likes.user_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  V.video_id < video_likes.video_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  P.playlist_id < PV.playlist_id [update: cascade, delete: cascade ]
+}
+
+Ref {
+  V.video_id < PV.video_id [update: cascade, delete: cascade ]
+}
+
