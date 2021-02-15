@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `YOUTUBE`.`comment_likes` (
   `comment_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT now(),
-  `like` TINYINT NOT NULL,
+  `a_like` TINYINT NOT NULL,
   PRIMARY KEY (`user_id`, `comment_id`),
   INDEX (`comment_id` ASC) VISIBLE,
   CONSTRAINT `fk_comment_likes_users_comments`
@@ -218,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `YOUTUBE`.`video_likes` (
   `video_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT now(),
-  `like` TINYINT NOT NULL,
+  `a_like` TINYINT NOT NULL,
   PRIMARY KEY (`user_id`, `video_id`),
   INDEX (`video_id` ASC) VISIBLE,
   CONSTRAINT `fk_video_likes_users_videos`
