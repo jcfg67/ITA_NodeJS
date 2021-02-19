@@ -36,16 +36,16 @@ INSERT INTO pizza_categories VALUES
 (4,'CATEGORÍA_PIZZA_4');
 
 INSERT INTO products VALUES
-(1,'Pizza Margarita','Product_1 Description','FIGURA_PRODUCTO_1',13.5,1),
-(2,'Burger XXXL','Product_2 Description','FIGURA_PRODUCTO_2',5.95,NULL),
-(3,'Beer Pilsen','Product_3 Description','FIGURA_PRODUCTO_3',2.95,NULL);
+(1,'Pizza Margarita','Product_1 Description','LINK_FIGURA_PRODUCTO_1',13.5,1),
+(2,'Burger XXXL','Product_2 Description','LINK_FIGURA_PRODUCTO_2',5.95,NULL),
+(3,'Beer Pilsen','Product_3 Description','LINK_FIGURA_PRODUCTO_3',2.95,NULL);
 
 INSERT INTO orders VALUES
-(1,'2020/11/15 18:30','home',25.35,1,1),
-(2,'2020/11/15 19:00','store',8.9,2,1),
-(3,'2020/11/15 18:20','home',65.8,3,1),
-(4,'2020/11/15 20:05','home',16.45,4,2),
-(5,'2020/11/15 19:30','store',17.8,5,2);
+(1,'2020/11/15 18:30','home',25.35,1,1,2,'2020/11/15 19:00'),
+(2,'2020/11/15 19:00','store',8.9,2,1,null,null),
+(3,'2020/11/15 18:20','home',65.8,3,1,2,'2020/11/15 20:15'),
+(4,'2020/11/15 20:05','home',16.45,4,2,4,'2020/11/15 20:45'),
+(5,'2020/11/15 19:30','store',17.8,5,2,null,null);
 
 INSERT INTO order_details VALUES
 (1,1,1),
@@ -60,7 +60,3 @@ INSERT INTO order_details VALUES
 (5,2,2),
 (5,3,2);
 
-INSERT INTO home_orders VALUES
-(1,2,'2020/11/15 19:00'),
-(3,2,'2020/11/15 20:15'),
-(4,4,'2020/11/15 20:45');
