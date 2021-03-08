@@ -1,10 +1,8 @@
-// WITH exec AND async
+// WITH exec AND callback
 
 const os = require('os');
 const { exec } = require('child_process');
-const util = require('util');
 
-const execProm = util.promisify(exec);
 const system = os.type();
 const folder = os.homedir();
 
@@ -24,16 +22,17 @@ switch (system){
         return console.log('OS read directory function not implemented');
 }
 
-async function readUserDir() {
-    try {
-        const { stdout, stderr } = await execProm(readCommand);     // An error in execProm throws an " UnhandledPromiseRejectionWarning " if not catched with a try...catch statement
-        console.log(stdout);
-    }
-    catch(error) {
-        console.error(`exec error --> ${error.stderr}`)
-    }
-}
+exec(readCommand, (error, stdout, stderr) => {
+  if (error) {
+    console.error(`exec error: ${error}`);
+    console.error(`stderr: ${stderr}`);         // stderr is attached too with the error object, so this line is not necessary! SEE PS at the bottom
+    return
+  }
+  console.log(stdout);
+});
 
-readUserDir();
+
+
+// PS: In case of an error (including any error resulting in an exit code other than 0), a rejected promise is returned, with the same error object given in the callback, but with two additional properties stdout and stderr.
 
 
