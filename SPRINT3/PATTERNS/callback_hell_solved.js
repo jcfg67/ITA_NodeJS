@@ -24,14 +24,28 @@ const reverseText = str =>
   .reverse()
   .join("");
 
-// Read and reverse contents of text files in a directory
-readdirProm(inbox)
-  .then(files => files.forEach(file => {
-    readFileProm(join(inbox, file), "utf8")
-      .catch(() => console.log("Error: File error"))
-      .then(data => writeFileProm(join(outbox, file), reverseText(data)))
-      .then(() => console.log(`${file} was successfully saved in the outbox!`))
-      .catch(() => console.log("Error: File could not be saved!"))
-  }))
-  .catch(() => console.log("Error: Folder inaccessible"));
+const readReverseWriteFile = async() => {
+  try {
+    const files = await readdirProm(inbox);
+    files.forEach( async(file) => {
+      try {
+        const data = await readFileProm(join(inbox, file), "utf8");
+        try {
+          await writeFileProm(join(outbox, file), reverseText(data));
+          console.log(`${file} was successfully saved in the outbox!`)
+        }
+        catch(error) {
+          console.log("Error: File could not be saved!")
+        }
+      }
+      catch {
+        console.log("Error: File error")
+      }
+    })
+  }
+  catch(error) {
+    console.log("Error: Folder inaccessible")
+  }
+}
 
+readReverseWriteFile();

@@ -1,3 +1,3 @@
 #### There are different implementations in different branches !!
 
-Version1 solved with promises
+Version2 solved with async/await but try...catch nested to handle errors
