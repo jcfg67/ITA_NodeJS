@@ -1,0 +1,29 @@
+{
+	"info": {
+		"_postman_id": "3d46e4dc-bba3-4771-8020-6eb9bff32008",
+		"name": "N1EX1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				},
+				"description": "REQUEST FOR EXCERCISE 1 LEVEL 1"
+			},
+			"response": []
+		}
+	]
+}
