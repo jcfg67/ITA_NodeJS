@@ -24,19 +24,19 @@ app.post('/upload', (req, res) => {
 
     upload(req, res, function(err) {
         if (req.fileValidationError) {
-            return res.send(`${req.fileValidationError} <br><a href='/'>Back</a>`);
+            return res.status(400).send(`${req.fileValidationError} <br><a href='/'>Back</a>`);
         }
         else if (!req.file) {
-            return res.send(`Please select an image to upload <br><a href='/'>Back</a>`);
+            return res.status(400).send(`Please select an image to upload <br><a href='/'>Back</a>`);
         }
         else if (err instanceof multer.MulterError) {
-            return res.send(err);
+            return res.status(500).send(err);
         }
         else if (err) {
-            return res.send(err);
+            return res.status(500).send(err);
         }
 
-        res.send(`You have uploaded this image: "${req.file.originalname}"<hr /><a href="./">Upload another image</a>`);
+        res.status(200).send(`You have uploaded this image: "${req.file.originalname}"<hr /><a href="./">Upload another image</a>`);
     });
 });
 
