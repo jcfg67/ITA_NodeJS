@@ -1,0 +1,19 @@
+{
+  "name": "N3EX1",
+  "version": "1.0.0",
+  "description": "Dice game with API REST",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.4",
+    "mysql": "^2.18.1"
+  }
+}
