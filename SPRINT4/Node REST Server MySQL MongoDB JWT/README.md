@@ -1,4 +1,4 @@
-Read and change data in /src/config.js file to your chosen server port and database configuration for both MySQL and MongoDB databases.
+##### First of all, _read_ and _change_ data in /src/config/config.js file to your chosen server port and database configuration for both MySQL and MongoDB databases.
 
 Run: npm i && npm start
 
