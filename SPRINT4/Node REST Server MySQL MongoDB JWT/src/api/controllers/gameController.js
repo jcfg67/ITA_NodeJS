@@ -13,9 +13,9 @@ const createPlayer = async (req, res) => {
     try {
         const name = req.body.name;
         const userExists = await services.checkUserExists(name);
-        if (userExists) return res.status(409).send(`A user named ${name} already exists!`);
+        if (userExists) return res.status(409).send({ success: false, message: `A user named ${name} already exists!` });
         await services.createPlayer(req.body);
-        res.status(201).send(`New user created`)
+        res.status(201).send({ success: true, result: `New user created` })
     }
     catch(err) {
         const error = handleError(err);
@@ -27,11 +27,11 @@ const updatePlayer = async (req, res) => {
     try {
         const { old_name, new_name } = {...req.body};
         let userExists = await services.checkUserExists(old_name);
-        if (!userExists) return res.status(400).send(`A user named ${old_name} doesn't exist!`);
+        if (!userExists) return res.status(400).send({ success: false, message: `A user named ${old_name} doesn't exist!` });
         userExists = await services.checkUserExists(new_name);
-        if (userExists) return res.status(409).send(`A user named ${new_name} already exists!`);
+        if (userExists) return res.status(409).send({ success: false, message: `A user named ${new_name} already exists!` });
         await services.updatePlayer(old_name, new_name);
-        res.status(201).send(`User updated`)
+        res.status(201).send({ success: true, result: `User updated` })
     }
     catch(err) {
         const error = handleError(err);
@@ -43,9 +43,9 @@ const rollDice = async (req, res) => {
     try {
         const id = req.params.id;
         const idExists = await services.checkIdExists(id);
-        if (!idExists) return res.status(400).send(`A user with id: ${id} doesn't exist!`);
+        if (!idExists) return res.status(400).send({ success: false, message: `A user with id: ${id} doesn't exist!` });
         const {side1, side2, diceTotal, score} = await services.rollDice(id);
-        res.status(200).send(`${side1} + ${side2} = ${diceTotal} You ${score.toLowerCase()}!!`)
+        res.status(200).send({ success: true, result: `${side1} + ${side2} = ${diceTotal} You ${score.toLowerCase()}!!` })
     }
     catch(err) {
         const error = handleError(err);
@@ -57,9 +57,9 @@ const deletePlayResults = async (req, res) => {
     try {
         const id = req.params.id;
         const idExists = await services.checkIdExists(id);
-        if (!idExists) return res.status(400).send(`A user with id: ${id} doesn't exist!`);
+        if (!idExists) return res.status(400).send({ success: false, message: `A user with id: ${id} doesn't exist!` });
         await services.deletePlayResults(id);
-        res.status(200).send(`Plays have been deleted!!`)
+        res.status(200).send({ success: true, result: `Plays have been deleted!!` })
     }
     catch(err) {
         const error = handleError(err);
@@ -70,7 +70,8 @@ const deletePlayResults = async (req, res) => {
 const readPlayers = async (req, res) => {
     try {
         const result = await services.readPlayers();
-        res.status(200).send(result)
+        if (result.length == 0) return res.status(200).send({ success: false, message: "There's no player yet" });
+        res.status(200).send({ success: true, result: result })
     }
     catch(err) {
         const error = handleError(err);
@@ -82,9 +83,9 @@ const readPlayResults = async (req, res) => {
     try {
         const id = req.params.id;
         const idExists = await services.checkIdExists(id);
-        if (!idExists) return res.status(400).send(`A user with id: ${id} doesn't exist!`);
+        if (!idExists) return res.status(400).send({ success: false, message: `A user with id: ${id} doesn't exist!` });
         const result = await services.readPlayResults(id);
-        res.status(200).send(result)
+        res.status(200).send({ success: true, result: result })
     }
     catch(err) {
         const error = handleError(err);
@@ -95,7 +96,8 @@ const readPlayResults = async (req, res) => {
 const readRanking = async (req, res) => {
     try {
         const result = await services.readRanking();
-        res.status(200).send(`The total players average is ${result}`)
+        if (result.length == 0) return res.status(200).send({ success: false, message: "There's no player yet" });
+        res.status(200).send({ success: true, result: `The total players average is ${result}` })
     }
     catch(err) {
         const error = handleError(err);
@@ -106,7 +108,8 @@ const readRanking = async (req, res) => {
 const readLoser = async (req, res) => {
     try {
         const result = await services.readLoser();
-        res.status(200).send(result)
+        if (result.length == 0) return res.status(200).send({ success: false, message: "There's no player yet" }); 
+        res.status(200).send({ success: true, result: result  })
     }
     catch(err) {
         const error = handleError(err);
@@ -118,7 +121,8 @@ const readLoser = async (req, res) => {
 const readWinner = async (req, res) => {
     try {
         const result = await services.readWinner();
-        res.status(200).send(result)
+        if (result.length == 0) return res.status(200).send({ success: false, message: "There's no player yet" });
+        res.status(200).send({ success: true, result: result  })
     }
     catch(err) {
         const error = handleError(err);

@@ -19,6 +19,7 @@ const updatePlayer = async (old_name, new_name) => {
 }
 
 const checkIdExists = async id => {
+    if(typeof(id) !== "number" && !Number.isInteger(+id)) return false;
     const result = await query(`SELECT name FROM players WHERE player_id = ${id}`);
     if (result.length != 0) return true;
     return false
@@ -62,20 +63,27 @@ const readPlayResults = async id => {
 const readRanking = async () => {
     let result = await query(`SELECT COUNT(*) AS totalplayers FROM players`);
     const totalPlayers = result[0].totalplayers;
+    if (totalPlayers == 0) return [];
     result = await query(`SELECT SUM(average) AS totalAverage FROM players`);
     const totalAverage = result[0].totalAverage;
     return totalAverage/totalPlayers
 }
 
 const readLoser = async () => {
-    let result = await query(`SELECT MIN(average) AS minAverage FROM players`);
+    let result = await query(`SELECT COUNT(*) AS totalplayers FROM players`);
+    const totalPlayers = result[0].totalplayers;
+    if (totalPlayers == 0) return [];
+    result = await query(`SELECT MIN(average) AS minAverage FROM players`);
     const minAverage = result[0].minAverage;
     result = await query(`SELECT * FROM players WHERE average = ${minAverage}`);
     return result
 }
 
 const readWinner = async () => {
-    let result = await query(`SELECT MAX(average) AS maxAverage FROM players`);
+    let result = await query(`SELECT COUNT(*) AS totalplayers FROM players`);
+    const totalPlayers = result[0].totalplayers;
+    if (totalPlayers == 0) return [];
+    result = await query(`SELECT MAX(average) AS maxAverage FROM players`);
     const maxAverage = result[0].maxAverage;
     result = await query(`SELECT * FROM players WHERE average = ${maxAverage}`);
     return result

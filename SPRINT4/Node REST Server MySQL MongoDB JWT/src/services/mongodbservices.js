@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Player = require('../models/player');
 
 const checkUserExists = async name => {
@@ -21,6 +22,7 @@ const updatePlayer = async (old_name, new_name) => {
 }
 
 const checkIdExists = async id => {
+    if( !mongoose.Types.ObjectId.isValid(id) ) return false;
     const result = await Player.exists({ "_id" : id });
     return result
 }
@@ -56,6 +58,8 @@ const readPlayResults = async id => {
 }
 
 const readRanking = async () => {
+    const totalPlayers = await Player.countDocuments({});
+    if (totalPlayers == 0) return [];
     let result = await Player.aggregate([
         { $group: {
             _id: null,
@@ -63,11 +67,12 @@ const readRanking = async () => {
             }
         }]);
     const totalAverage = result[0].total;
-    const totalPlayers = await Player.countDocuments({});
     return totalAverage/totalPlayers
 }
 
 const readLoser = async () => {
+    const totalPlayers = await Player.countDocuments({});
+    if (totalPlayers == 0) return [];
     let result = await Player.find().sort({average: 1});
     const minAverage = result[0].average;
     result = result.filter(item => item.average == minAverage);
@@ -75,6 +80,8 @@ const readLoser = async () => {
 }
 
 const readWinner = async () => {
+    const totalPlayers = await Player.countDocuments({});
+    if (totalPlayers == 0) return [];
     let result = await Player.find().sort({average: -1});
     const maxAverage = result[0].average;
     result = result.filter(item => item.average == maxAverage);
