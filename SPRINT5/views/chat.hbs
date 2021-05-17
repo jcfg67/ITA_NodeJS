@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>ChatApp</title>
+</head>
+<body>
+    <div id="container">
+        <div id="title"><strong>ChatApp</strong></div>
+        <div id="chat">
+            <div id="room_container">
+                <div>
+                    <strong>Rooms</strong>
+                </div>
+                <div id="roomsList"></div>
+                <div>
+                    <form id="new_room">
+                        <div><input
+                            type="text"
+                            id="room_input"
+                            placeholder="Enter Room..."
+                            title="Choose one name from above or write a new one"
+                            required
+                            style="width: 135px;"
+                            >
+                        </div>
+                        <button type="submit" id="room_button">Change Room</button>
+                    </form>
+                </div>
+                <hr>
+                <div id="active_room"></div>
+                    <button id="leave_button" style="width: 80px;">Leave</button>
+            </div>
+            <div id="message_container">
+                <div id="room_name"></div>
+                <div id="messages"></div>
+                <form id="send_container">
+                    <input type="text" id="message_input" required>
+                    <button type="submit" id="send_button">Send</button>
+                </form>
+            </div>
+            <div id="user_container">
+                <strong>Users</strong>
+                <div id="userlist"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentRoom = '{{ room }}';
+        let user = {{{ user }}};
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
