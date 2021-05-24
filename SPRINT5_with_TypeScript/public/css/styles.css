@@ -1,0 +1,126 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+    height: 100vh;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#container {
+    height: 100%;
+    background-color: black;
+}
+
+#login_container {
+    max-width: 500px;
+	margin: 80px auto;
+    background-color: gray;
+}
+
+#login_header {
+    text-align: center;
+    padding: 20px;
+    color: white;
+}
+
+#login_main {
+	padding: 30px 40px;
+}
+
+#login-main p {
+	margin-bottom: 20px;
+}
+
+#login_main label {
+	display: block;
+    color:white;
+	margin-bottom: 5px;
+}
+
+#login_main input[type='text'] {
+	font-size: 16px;
+	padding: 5px;
+	height: 40px;
+	width: 100%;
+}
+
+#btn {
+	margin-top: 20px;
+	width: 100%;
+    cursor: pointer;
+	padding: 5px 15px;
+	border: 0;
+	font-size: 17px;
+}
+
+#title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    color: white;
+    padding: 5px 0 5px 0;
+    background-color: #3B3E4F;
+}
+
+#chat {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 94%;
+}
+
+#room_container {
+    font-size: 1.2em;
+    flex-grow: 1;
+    padding: 10px;
+    color: white;
+    background-color: #3B3E4F;
+    display: flex;
+    flex-flow: column;
+}
+
+#message_container {
+    font-size: 1.2em;
+    flex-grow: 15;
+    padding: 10px;
+    display: flex;
+    flex-flow: column;
+}
+
+#room_name {
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+#messages {
+    flex-grow: 30;
+    color: white;
+}
+
+#user_container {
+    font-size: 1.2em;
+    flex-grow: 1;
+    padding: 10px;
+    color: white;
+    background-color: #3B3E4F;
+}
+
+#send_container {
+    flex-grow: 1;
+    display: flex;
+}
+
+#message_input {
+    flex-grow: 25;
+}
+
+#send_button {
+    flex-grow: 1;
+}

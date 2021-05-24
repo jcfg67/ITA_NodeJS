@@ -1,0 +1,13 @@
+{
+   "type": "mysql",
+   "host": "localhost",
+   "port": 3306,
+   "username": "user",
+   "password": "password",
+   "database": "CHAT_TS_TYPEORM",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/entity/**/*.ts"
+   ]
+}
